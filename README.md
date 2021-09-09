@@ -1,2 +1,1 @@
-# petProjects
-all of my pet projects
+# Здесь собраны все мои pet проекты
