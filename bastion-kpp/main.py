@@ -6,38 +6,36 @@ import pytesseract
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 tessdata_dir_config = r'--tessdata-dir "C:\Program Files\Tesseract-OCR\tessdata"'
-# Считывание изобржения и конвертация в RGB
-carplate_img = cv2.imread('./test_Images/y_0e33e7cc.jpg')
-carplate_img = cv2.resize(carplate_img, (620, 480))
-gray = cv2.cvtColor(carplate_img, cv2.COLOR_BGR2GRAY)
+# Считывание изобржения и конвертация
+carplate_img = cv2.imread('./test_Images/y_0e33e7cc.jpg')  # считывание изображения
+carplate_img = cv2.resize(carplate_img, (620, 480))  # ресайз изображения
+gray = cv2.cvtColor(carplate_img, cv2.COLOR_BGR2GRAY)  # перевод в серый формат
 gray = cv2.bilateralFilter(gray, 13, 15, 15)
-edged = cv2.Canny(gray, 30, 200)  # Perform Edge detection
-cv2.imshow('edged', edged)
-cv2.waitKey(0)
-contours = cv2.findContours(edged.copy(), cv2.RETR_TREE,
-                            cv2.CHAIN_APPROX_SIMPLE)
+edged = cv2.Canny(gray, 30, 200)  # Замыливает ненужные детали на изображении
+contours = cv2.findContours(edged.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)  # создание контуров прямоугольных объектов
 contours = imutils.grab_contours(contours)
-contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]
+contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]  # сортировка контуров
 screenCnt = None
 for c in contours:
-    # approximate the contol
     peri = cv2.arcLength(c, True)
     approx = cv2.approxPolyDP(c, 0.018 * peri, True)
     if len(approx) == 4:
         screenCnt = approx
         break
-# Masking the part other than the number plate
+
+# Маскировка деталей которые не являются номером
 mask = np.zeros(gray.shape, np.uint8)
 new_image = cv2.drawContours(mask, [screenCnt], 0, 255, -1,)
 new_image = cv2.bitwise_and(carplate_img, carplate_img, mask=mask)
-# Now crop
+
+# Обрезаем итоговое изображение
 (x, y) = np.where(mask == 255)
 (topx, topy) = (np.min(x), np.min(y))
 (bottomx, bottomy) = (np.max(x), np.max(y))
 Cropped = new_image[topx:bottomx+1, topy:bottomy+1]
 
-# Импорт Каскадов Хаара для русских номеров
-carplate_haar_cascade = cv2.CascadeClassifier('./haarcascade_russian_plate_number.xml')
+# Импорт Каскадов Хаара для русских номеров(не понадобилось)
+# carplate_haar_cascade = cv2.CascadeClassifier('./haarcascade_russian_plate_number.xml')
 custom_config = r' --oem 3 --psm 6'
 plt.imshow(new_image, cmap='gray')
 plt.axis('off')
@@ -55,8 +53,7 @@ print("Распознанный номер:", text)
 #
 #
 # detected_carplate_img = carplate_detect(carplate_img)
-#
-#
+
 # # Create function to retrieve only the car plate region itself
 # def carplate_extract(image):
 #     global carplate_img
