@@ -20,7 +20,7 @@ contours = imutils.grab_contours(contours)
 contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]
 screenCnt = None
 for c in contours:
-    # approximate the conto
+    # approximate the contol
     peri = cv2.arcLength(c, True)
     approx = cv2.approxPolyDP(c, 0.018 * peri, True)
     if len(approx) == 4:
