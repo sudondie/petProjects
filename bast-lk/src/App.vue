@@ -21,7 +21,7 @@
                 <input type="text" v-model="email" >
                 <input type="text" v-model="country" >
                 <input type="text" v-model="city" >
-                <label for="proUser">Профессиональный пользователь</label>
+                <label for="proUser">Профессиональный пользователь!</label>
                 <input type="checkbox" class="form-checkbox" id="proUser" v-model="proUser" value="true">
                 <button class="btn primary">Зарегистрироваться</button>
             </form>
