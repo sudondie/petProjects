@@ -7,11 +7,13 @@ import pytesseract
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 tessdata_dir_config = r'--tessdata-dir "C:\Program Files\Tesseract-OCR\tessdata"'
 # Считывание изобржения и конвертация
-carplate_img = cv2.imread('./test_Images/y_0e33e7cc.jpg')  # считывание изображения
+carplate_img = cv2.imread('./test_Images/!car2.jpg')  # считывание изображения
 carplate_img = cv2.resize(carplate_img, (620, 480))  # ресайз изображения
 gray = cv2.cvtColor(carplate_img, cv2.COLOR_BGR2GRAY)  # перевод в серый формат
 gray = cv2.bilateralFilter(gray, 13, 15, 15)
 edged = cv2.Canny(gray, 30, 200)  # Замыливает ненужные детали на изображении
+cv2.imshow('edged', edged)
+cv2.waitKey(0)
 contours = cv2.findContours(edged.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)  # создание контуров прямоугольных объектов
 contours = imutils.grab_contours(contours)
 contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]  # сортировка контуров
