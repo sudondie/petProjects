@@ -15,7 +15,7 @@
             <q-input outlined v-model="code" label="Введите код">
             </q-input>
             <p v-if="floodWait > 0" style="color: red">Отправить запрос можно через {{ floodWait }} секунд</p>
-            <q-btn color="primary" v-if="smsSent" :disabled="code.length<6" type="submit" @click="bastSms" style="width: 150px">
+            <q-btn color="primary" v-if="smsSent" :disabled="code.length<6" type="submit" style="width: 150px">
                 Войти
             </q-btn>
             <a @click="bastSms">Запросить код повторно</a>
@@ -36,6 +36,9 @@ export default {
         const code = ref('')
         const floodWait = ref(0)
         const phoneNumber = ref('')
+        const enterCode = () => {
+            store.commit('setSmsSent',true)
+        }
         const bastSms = async ()=> {
             await store.dispatch('bastSms',{
                 phoneNumber : phoneNumber,
@@ -67,6 +70,7 @@ export default {
             bastSms,
             bastLogin,
             changeCode,
+            enterCode,
             floodWait : computed(()=> store.state.floodWait)
         }
     },

@@ -1,5 +1,9 @@
 <template>
-    <div class="container">
+    <div class="container" v-if="logged">
+        <the-header ></the-header>
+      <app-content></app-content>
+    </div>
+    <div class="container" v-else>
         <div class="card">
             <app-login v-if="registered"></app-login>
             <app-registration v-else></app-registration>
@@ -9,7 +13,9 @@
 
 <script>
 import AppRegistration from "@/components/AppRegistration";
+import AppContent from "@/components/AppContent";
 import AppLogin from "@/components/AppLogin";
+import TheHeader from "@/components/TheHeader";
 import axios from "axios";
 import {useStore} from 'vuex';
 import {computed, ref} from 'vue';
@@ -20,12 +26,15 @@ export default {
       const progress = ref(false)
       return {
           progress,
-          registered: computed(()=> store.state.registered)
+          registered: computed(()=> store.state.registered),
+          logged : computed(()=> store.state.logged)
       }
     },
     components : {
       AppRegistration,
-      AppLogin
+      AppLogin,
+      TheHeader,
+      AppContent
     },
     data() {
         return {

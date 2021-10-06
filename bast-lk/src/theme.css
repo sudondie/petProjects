@@ -30,6 +30,7 @@ ol,
 p,
 ul {
     line-height: 1.7;
+    color: #000;
 }
 
 a {
@@ -48,6 +49,7 @@ h5,
 h6 {
     font-weight: 500;
     line-height: 1.45;
+    color: #000;
 }
 
 h1 {
@@ -165,7 +167,16 @@ img {
     margin: 0 0 0.3rem 0.3rem;
     font-weight: 500;
 }
-
+label {
+    color: #000;
+}
+.radios {
+    width: 80%;
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+    color: #000;
+}
 .form-checkbox .checkbox input {
     margin-right: 1rem;
 }
