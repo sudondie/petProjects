@@ -1,7 +1,8 @@
 <template>
     <div class="container" v-if="logged">
-        <the-header ></the-header>
-      <app-content></app-content>
+        <the-header>
+          <app-content></app-content>
+        </the-header>
     </div>
     <div class="container" v-else>
         <div class="card">
@@ -18,12 +19,17 @@ import AppLogin from "@/components/AppLogin";
 import TheHeader from "@/components/TheHeader";
 import axios from "axios";
 import {useStore} from 'vuex';
-import {computed, ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 export default {
   name: 'LayoutDefault',
     setup () {
       const store = useStore()
       const progress = ref(false)
+      onMounted(()=> {
+        if(localStorage.getItem('logged')) {
+          store.state.logged = ref(true)
+        }
+      })
       return {
           progress,
           registered: computed(()=> store.state.registered),

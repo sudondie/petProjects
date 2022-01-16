@@ -10,27 +10,30 @@
                 <q-toolbar-title>
                 </q-toolbar-title>
                 <q-btn flat round dense icon="" />
-                <q-btn flat dense>Выйти</q-btn>
+                <q-btn flat dense @click="logout">Выйти</q-btn>
             </q-toolbar>
         </q-header>
-
-        <q-page-container>
-        </q-page-container>
-
+      <slot></slot>
     </q-layout>
 </template>
 
 <script>
 import {useStore} from "vuex";
-import {computed} from "vue";
+import {computed,ref} from "vue";
 
 export default {
     name: "TheHeader",
   setup() {
        const store = useStore();
+       const logout = ()=> {
+         store.state.logged = ref(false)
+         localStorage.removeItem('logged')
+         localStorage.removeItem('jwt-token')
+    }
       return {
         store,
-        lastName: computed(()=> store.state.lastName.value)
+        lastName: computed(()=> store.state.lastName.value),
+        logout
       }
   }
 }

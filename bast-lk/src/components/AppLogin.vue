@@ -1,6 +1,7 @@
 <template>
     <form class="form-control" @submit.prevent="bastLogin">
         <div class="card" v-if="!smsSent">
+          <p>Это номер: </p>{{phoneNumber}}
             <q-input outlined v-model="phoneNumber"  mask="phone" label="Введите номер телефона" prefix="+7">
                 <template v-slot:prepend>
                     <img src="../assets/rus.svg" alt="">
@@ -27,7 +28,7 @@
 <script>
 import {ref, computed,onMounted} from 'vue';
 import {useStore} from "vuex";
-
+//import * as yup from "yup";
 export default {
     name: "AppLogin",
     setup() {

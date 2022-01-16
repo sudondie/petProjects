@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 tessdata_dir_config = r'--tessdata-dir "C:\Program Files\Tesseract-OCR\tessdata"'
-img = cv2.imread('./test_Images/!car2.jpg', cv2.IMREAD_COLOR)
+img = cv2.imread('./test_Images/12110704.jpg', cv2.IMREAD_COLOR)
 img = imutils.resize(img, width=500)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
 gray = cv2.bilateralFilter(gray, 11, 17, 17) #Blur to reduce noise
