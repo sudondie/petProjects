@@ -7,7 +7,7 @@ import pytesseract
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 tessdata_dir_config = r'--tessdata-dir "C:\Program Files\Tesseract-OCR\tessdata"'
 # Считывание изобржения и конвертация
-carplate_img = cv2.imread('./test_Images/!car2.jpg')  # считывание изображения
+carplate_img = cv2.imread('./test_Images/0aaabe5ca0317e9793d77c6802c80101.jpg')  # считывание изображения
 carplate_img = cv2.resize(carplate_img, (620, 480))  # ресайз изображения
 gray = cv2.cvtColor(carplate_img, cv2.COLOR_BGR2GRAY)  # перевод в серый формат
 gray = cv2.bilateralFilter(gray, 13, 15, 15)
